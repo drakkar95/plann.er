@@ -4,9 +4,23 @@ import { useState } from 'react'
 
 export function App() {
   const [isGuestsInputOpen,setIsGuestsInputOpen] = useState(false);
+  const [isGuestsModalOpen,setIsGuestsModalOpen] = useState(false);
+
 
   function openGuestsInput(){
     setIsGuestsInputOpen(true)
+  }
+
+  function closeGuestsInput(){
+    setIsGuestsInputOpen(false)
+  }
+
+  function openGuestsModal(){
+    setIsGuestsModalOpen(true)
+  }
+
+  function closeGuestsModal(){
+    setIsGuestsModalOpen(false)
   }
 
   return (
@@ -22,23 +36,22 @@ export function App() {
         
         <div className='flex items-center gap-2 flex-1'>
             <MapPin className="size-5 text-zinc-400" />
-            <input type="text" placeholder="Para onde você vai?" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-2" />
+            <input disabled={isGuestsInputOpen} type="text" placeholder="Para onde você vai?" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-2" />
         </div>
 
         <div className='flex items-center gap-2'>
             <Calendar className="size-5 text-zinc-400" />
-            <input type="text" placeholder="Quando?" className="bg-transparent text-lg placeholder-zinc-400 outline-none " />
+            <input disabled={isGuestsInputOpen} type="text" placeholder="Quando?" className="bg-transparent text-lg placeholder-zinc-400 outline-none " />
         </div>
 
         <div className='w-px h-6 bg-zinc-800'>
-
         </div>
 
         {
           isGuestsInputOpen
 
           ? (
-            <button className='bg-zinc-800 text-zinc-200 rounded-lg px-5 py-2 font-medium flex items-center gap-2 hover:bg-zinc-700 ' >
+            <button onClick={closeGuestsInput} className='bg-zinc-800 text-zinc-200 rounded-lg px-5 py-2 font-medium flex items-center gap-2 hover:bg-zinc-700 ' >
               Alterar local e data
               <Settings2 className="size-5 text-zinc-400" />
             </button>
@@ -56,10 +69,10 @@ export function App() {
       { isGuestsInputOpen && (
         <div className="h-16 px-4 bg-zinc-900 rounded-xl flex items-center shadow-shape gap-3" >
         
-        <div className='flex items-center gap-2 flex-1'>
+        <button type='button' onClick={openGuestsModal} className='flex items-center gap-2 flex-1'>
             <UserRoundPlus className="size-5 text-zinc-400" />
-            <input type="text" placeholder="Quem estará na viagem?" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-2" />
-        </div>
+            <span  className=" text-lg text-zinc-400 flex-1">Quem estará na viagem?</span>
+        </button>
 
         <div className='w-px h-6 bg-zinc-800'>
 
@@ -78,6 +91,19 @@ export function App() {
         com nossos <a className="text-zinc-300 underline" href="a">termos de uso</a> e <a className="text-zinc-300 underline" href="a">politicas de privacidade</a>.
       </p>
     </div>
+      {
+        isGuestsModalOpen && (
+
+          <div className='fixed inset-0 bg-black/60 flex items-center justify-center'>
+            <div className='w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900'>
+              <h2>Selecionar convidados</h2>
+            </div>
+
+          </div>
+
+        )
+      }
+
     </div>
    
   )
